@@ -9,9 +9,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 
 let campgrounds = [
-    {name: 'Camp David', image: 'https://images.pexels.com/photos/2398220/pexels-photo-2398220.jpeg?auto=compress&cs=tinysrgb&h=350'},
-    {name: 'Camp Jarome', image: 'https://images.pexels.com/photos/1309584/pexels-photo-1309584.jpeg?auto=compress&cs=tinysrgb&h=350'},
-    {name: 'Camp John', image: 'https://pixabay.com/get/55e8dc404f5aab14f1dc84609620367d1c3ed9e04e50774975287ad1974bcc_340.jpg'}
+    {name: 'Camp David', image: 'https://pixabay.com/get/52e5d7414355ac14f1dc84609620367d1c3ed9e04e507749752873d29448cd_340.jpg'},
+    {name: 'Camp Jarome', image: 'https://pixabay.com/get/53e4d1424b56a814f1dc84609620367d1c3ed9e04e507749752873d29448cd_340.jpg'},
+    {name: 'Camp John', image: 'https://pixabay.com/get/57e1d14a4e52ae14f1dc84609620367d1c3ed9e04e507749752873d29448cd_340.jpg'}
 ]
 
 app.get('/', (req,res)=>{
