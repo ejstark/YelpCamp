@@ -1,8 +1,11 @@
 const express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
-  mongoose = require('mongoose');
+  mongoose = require('mongoose'),
+  Campground = require('./models/campground');
+  const seedDB = require('./seeds');
 
+seedDB();
 //connect mongoose
 mongoose.connect('mongodb://localhost/yelp_camp', {
   useNewUrlParser: true,
@@ -15,30 +18,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //Specify view engine and now we don't have to add .ejs
 app.set('view engine', 'ejs');
 
-// SCHEMA SETUP for database
-let campgroundSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-});
 
-//make a model that uses the declared schema
-let Campgrounds = mongoose.model('Campground', campgroundSchema);
 
-//create an entry and add to database
-// Campgrounds.create({
-//     name: 'Camp Alpha',
-//     image:
-//       'https://media.gettyimages.com/photos/senior-couple-camping-in-the-mountains-and-eating-a-snack-picture-id1031972950?s=2048x2048',
-//     description: 'One of the oldest camps, classic view.'
-// }, (err, campground)=>{
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         console.log('Newly created campground:');
-//         console.log(campground);
-//     }
-// });
+
 
 
 
@@ -48,7 +30,7 @@ app.get('/', (req, res) => {
 
 app.get('/campgrounds', (req, res) => {
   //retrieve all camgrounds from database
-  Campgrounds.find({}, (err, allCampgrounds) => {
+  Campground.find({}, (err, allCampgrounds) => {
     if (err) {
       console.log(err);
     } else {
@@ -67,7 +49,7 @@ app.post('/campgrounds', (req, res) => {
 
   let newCampground = { name: name, image: image, description: desc };
   //Create new campground and save to database
-  Campgrounds.create(newCampground, (err, newlyCreated) => {
+  Campground.create(newCampground, (err, newlyCreated) => {
     if (err) {
       console.log(err);
     } else {
@@ -77,20 +59,23 @@ app.post('/campgrounds', (req, res) => {
   });
 });
 
-//show form
+//form
 app.get('/campgrounds/new', (req, res) => {
   res.render('new');
 });
 
 //SHOW - show more info about one campground 
 app.get('/campgrounds/:id', (req,res)=>{
-    //find campground with provided id
-    Campgrounds.findById(req.params.id, (err, foundCamground)=>{
+    //find campground with provided id, and populate the finsing with comments from comments database
+    Campground.findById(req.params.id).populate('comments').exec(function(err, foundCampground){
         if (err) {
             console.log(err);
         } else{
+            //console.log(foundCampground);
+            //console.log(foundCampground.name);
+            
             //render show template with that campground
-    res.render('show', {campground: foundCamground});
+    res.render('show', {campground: foundCampground});
         }
     });  
 });
