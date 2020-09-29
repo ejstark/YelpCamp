@@ -1,0 +1,40 @@
+<%- include ('partials/header') %>
+
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="jumbotron">
+            <h1>Welcome to YelpCamp!</h1>
+            <p>View our hand-picked camppgrounds from all over the world</p>
+            <p>
+                <a class="btn btn-primary btn-large" href="/campgrounds/new">Add New Campground</a></p>
+        </div>
+    </header>
+
+
+    <div class="row text-center">
+
+        <% campgrounds.forEach(campground => { %>
+        <!-- p-2 represent padding
+            figure is to allow figcaption
+             bg light for color of the box around image -->
+            <div class="col-md-4 col-sm-6 ">
+                <figure class="rounded p-3 bg-light shadow-sm">
+                <img class="img-fluid " src="<%= campground.image %> " alt="">
+                <figcaption class="p-1 card-img-bottom">
+                <!-- <div class="caption"> -->
+                    <h4><%= campground.name %> </h4>
+                    <p>
+                        <a href="/campgrounds/<%= campground._id %> " class="btn btn-primary">More Info</a>
+                    </p>
+                <!-- </div> -->
+            </figcaption>
+            </figure>
+            </div>
+        
+        <% }); %>
+    </div>
+
+</div>
+
+<%- include ('partials/footer') %>
