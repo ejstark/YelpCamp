@@ -3,12 +3,16 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
   Campground = require('./models/campground');
+  passport   = require('passport');
+  LocalStrategy = require('passport-local');
 const campground = require('./models/campground');
 const { findById } = require('./models/comment');
 const seedDB = require('./seeds');
-const Comment = require('./models/comment');
+const Comment = require('./models/comment'),
+        User = require('./models/user');
 
-seedDB();
+
+
 //connect mongoose
 mongoose.connect('mongodb://localhost/yelp_camp', {
   useNewUrlParser: true,
@@ -20,6 +24,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // const { render } = require('ejs');
 //Specify view engine and now we don't have to add .ejs
 app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public'))
+seedDB();
+
 
 app.get('/', (req, res) => {
   res.render('landing');
