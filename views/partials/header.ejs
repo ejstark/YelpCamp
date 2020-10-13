@@ -26,15 +26,21 @@
         <!-- .ml-auto class pulls navigation items to rightm .mr-auto pulls htem to the left -->
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav ml-auto">
+               <%  if(typeof currentUser === 'undefined'){ %>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Sign Up</a>
-                </li>
+                    <a class="nav-link" href="/register">Sign Up</a>
+                </li> 
+                <% } else { %>
+                    <li class="nav-item">
+                        <a>Signed In As <%= currentUser.username %> </a>
+                    </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
+                    <a class="nav-link" href="/logout">Logout</a>
                 </li>
+                <% }%>
             </ul>
         </div>
     </nav>
